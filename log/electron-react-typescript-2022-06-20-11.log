@@ -1,0 +1,16 @@
+2022-06-20 11:09:05.044[error] Failed to load addon.node
+2022-06-20 11:09:05.624[debug] startUrl http://localhost:3000
+2022-06-20 11:09:06.893[verbose] Receive setVideoLayerPosition 10 678
+2022-06-20 11:09:06.894[verbose] Receive setVideoLayerSize 1260 595
+2022-06-20 11:09:06.895[debug] Receive getCameras
+2022-06-20 11:09:07.063[debug] getCamerasMac [{"name":"FaceTime HD攝影機","path":"CC26126S3B7G1HNAL","vid":"","pid":"","serialNumber":""}]
+2022-06-20 11:09:07.107[debug] Receive getCameras
+2022-06-20 11:09:07.108[debug] getCamerasMac [{"name":"FaceTime HD攝影機","path":"CC26126S3B7G1HNAL","vid":"","pid":"","serialNumber":""}]
+2022-06-20 11:32:48.334[error] Failed to load addon.node
+2022-06-20 11:32:48.966[debug] startUrl http://localhost:3000
+2022-06-20 11:32:49.640[verbose] Receive setVideoLayerPosition 10 677
+2022-06-20 11:32:49.640[verbose] Receive setVideoLayerSize 1260 594
+2022-06-20 11:32:49.641[debug] Receive getCameras
+2022-06-20 11:32:49.865[debug] getCamerasMac [{"name":"FaceTime HD攝影機","path":"CC26126S3B7G1HNAL","vid":"","pid":"","serialNumber":""}]
+2022-06-20 11:32:50.006[debug] Receive getCameras
+2022-06-20 11:32:50.007[debug] getCamerasMac [{"name":"FaceTime HD攝影機","path":"CC26126S3B7G1HNAL","vid":"","pid":"","serialNumber":""}]

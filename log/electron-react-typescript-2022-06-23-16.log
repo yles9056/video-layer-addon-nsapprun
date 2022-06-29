@@ -1,0 +1,11 @@
+2022-06-23 16:10:20.059[debug] startUrl http://localhost:3000
+2022-06-23 16:10:22.193[verbose] Receive setVideoLayerPosition 10 15
+2022-06-23 16:13:38.809[debug] startUrl http://localhost:3000
+2022-06-23 16:14:53.005[debug] startUrl http://localhost:3000
+2022-06-23 16:22:50.301[debug] startUrl http://localhost:3000
+2022-06-23 16:22:51.816[verbose] Receive setVideoLayerPosition 10 677
+2022-06-23 16:26:58.170[debug] startUrl http://localhost:3000
+2022-06-23 16:30:42.348[debug] startUrl http://localhost:3000
+2022-06-23 16:35:34.393[debug] startUrl http://localhost:3000
+2022-06-23 16:40:30.072[debug] startUrl http://localhost:3000
+2022-06-23 16:40:31.204[verbose] Receive setVideoLayerPosition 10 677

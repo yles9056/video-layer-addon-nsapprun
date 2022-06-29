@@ -1,0 +1,125 @@
+2022-06-24 17:00:46.721[debug] startUrl http://localhost:3000
+2022-06-24 17:00:48.255[verbose] Receive setVideoLayerPosition 10 678
+2022-06-24 17:00:48.256[verbose] Receive setVideoLayerSize 1260 595
+2022-06-24 17:00:48.257[debug] Receive getCameras
+2022-06-24 17:00:48.266[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:00:48.268[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:00:48.268[debug] test1
+2022-06-24 17:00:48.335[debug] 0x14100000047d80b3
+2022-06-24 17:00:48.336[debug] test2
+2022-06-24 17:00:48.487[debug] Receive getCameras
+2022-06-24 17:00:48.489[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:00:48.489[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:00:48.490[debug] test1
+2022-06-24 17:00:48.514[debug] 0x14100000047d80b3
+2022-06-24 17:00:48.514[debug] test2
+2022-06-24 17:00:48.515[debug] Receive getCameras
+2022-06-24 17:00:48.516[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:00:48.517[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:00:48.517[debug] test1
+2022-06-24 17:00:48.542[debug] 0x14100000047d80b3
+2022-06-24 17:00:48.542[debug] test2
+2022-06-24 17:04:53.909[debug] startUrl http://localhost:3000
+2022-06-24 17:04:55.592[verbose] Receive setVideoLayerPosition 10 678
+2022-06-24 17:04:55.593[verbose] Receive setVideoLayerSize 1260 595
+2022-06-24 17:04:55.597[debug] Receive getCameras
+2022-06-24 17:04:55.607[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:04:55.607[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:04:55.608[debug] test1
+2022-06-24 17:04:55.646[debug] 0x14100000047d80b3
+2022-06-24 17:04:55.647[debug] test2
+2022-06-24 17:04:55.661[debug] Receive getCameras
+2022-06-24 17:04:55.662[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:04:55.663[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:04:55.663[debug] test1
+2022-06-24 17:04:55.684[debug] 0x14100000047d80b3
+2022-06-24 17:04:55.685[debug] test2
+2022-06-24 17:04:55.739[debug] Receive getCameras
+2022-06-24 17:04:55.752[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:04:55.764[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:04:55.766[debug] test1
+2022-06-24 17:04:55.859[debug] 0x14100000047d80b3
+2022-06-24 17:04:55.860[debug] test2
+2022-06-24 17:05:00.108[debug] Receive openCamera
+2022-06-24 17:05:00.108[debug] isopenture
+2022-06-24 17:34:54.051[debug] startUrl http://localhost:3000
+2022-06-24 17:34:55.269[verbose] Receive setVideoLayerPosition 10 679
+2022-06-24 17:34:55.270[verbose] Receive setVideoLayerSize 1260 596
+2022-06-24 17:34:55.270[debug] Receive getCameras
+2022-06-24 17:34:55.679[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:34:55.680[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:34:55.680[debug] test1
+2022-06-24 17:34:55.720[debug] 0x14100000047d80b3
+2022-06-24 17:34:55.720[debug] test2
+2022-06-24 17:34:55.771[debug] Receive getCameras
+2022-06-24 17:34:55.772[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:34:55.773[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:34:55.773[debug] test1
+2022-06-24 17:34:55.799[debug] 0x14100000047d80b3
+2022-06-24 17:34:55.800[debug] test2
+2022-06-24 17:34:55.801[debug] Receive getCameras
+2022-06-24 17:34:55.803[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:34:55.803[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:34:55.804[debug] test1
+2022-06-24 17:34:55.827[debug] 0x14100000047d80b3
+2022-06-24 17:34:55.827[debug] test2
+2022-06-24 17:35:01.785[debug] Receive openCamera
+2022-06-24 17:37:34.417[debug] startUrl http://localhost:3000
+2022-06-24 17:37:35.705[verbose] Receive setVideoLayerPosition 10 678
+2022-06-24 17:37:35.707[verbose] Receive setVideoLayerSize 1260 595
+2022-06-24 17:37:35.707[debug] Receive getCameras
+2022-06-24 17:37:35.725[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:37:35.726[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:37:35.726[debug] test1
+2022-06-24 17:37:35.788[debug] 0x14100000047d80b3
+2022-06-24 17:37:35.788[debug] test2
+2022-06-24 17:37:35.941[debug] Receive getCameras
+2022-06-24 17:37:35.943[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:37:35.944[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:37:35.944[debug] test1
+2022-06-24 17:37:35.972[debug] 0x14100000047d80b3
+2022-06-24 17:37:35.973[debug] test2
+2022-06-24 17:37:35.974[debug] Receive getCameras
+2022-06-24 17:37:35.976[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:37:35.977[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:37:35.977[debug] test1
+2022-06-24 17:37:36.001[debug] 0x14100000047d80b3
+2022-06-24 17:37:36.001[debug] test2
+2022-06-24 17:37:40.183[debug] Receive openCamera
+2022-06-24 17:37:40.183[debug] isopenture
+2022-06-24 17:50:48.548[debug] startUrl http://localhost:3000
+2022-06-24 17:50:50.064[verbose] Receive setVideoLayerPosition 10 678
+2022-06-24 17:50:50.069[verbose] Receive setVideoLayerSize 1260 595
+2022-06-24 17:50:50.071[debug] Receive getCameras
+2022-06-24 17:50:50.091[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:50:50.092[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:50:50.092[debug] test1
+2022-06-24 17:50:50.141[debug] 0x14100000047d80b3
+2022-06-24 17:50:50.141[debug] test2
+2022-06-24 17:50:50.181[debug] Receive getCameras
+2022-06-24 17:50:50.183[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:50:50.185[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:50:50.185[debug] test1
+2022-06-24 17:50:50.209[debug] 0x14100000047d80b3
+2022-06-24 17:50:50.209[debug] test2
+2022-06-24 17:50:50.210[debug] Receive getCameras
+2022-06-24 17:50:50.211[debug] Serial number of camera: 0x14100000047d80b3
+20211110001
+2022-06-24 17:50:50.212[debug] getCamerasMac [{"name":"Kensington W2000 Full HD Auto Focus Webcam","path":"0x14100000047d80b3","vid":"047d","pid":"80b3","serialNumber":"20211110001"}]
+2022-06-24 17:50:50.212[debug] test1
+2022-06-24 17:50:50.240[debug] 0x14100000047d80b3
+2022-06-24 17:50:50.240[debug] test2

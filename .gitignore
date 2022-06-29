@@ -1,0 +1,3 @@
+node_modules
+./addons/node_modules
+./camCtrlLib/node_modules

@@ -1,0 +1,12 @@
+2022-06-29 01:54:25.584[debug] startUrl http://localhost:3000
+2022-06-29 01:54:26.791[verbose] Receive setVideoLayerPosition 10 10
+2022-06-29 01:54:26.798[verbose] Receive setVideoLayerSize 1280 720
+2022-06-29 01:54:26.814[debug] Receive getCameras
+2022-06-29 01:56:41.777[debug] startUrl http://localhost:3000
+2022-06-29 01:56:42.764[verbose] Receive setVideoLayerPosition 10 10
+2022-06-29 01:56:42.789[verbose] Receive setVideoLayerSize 1280 720
+2022-06-29 01:56:42.792[debug] Receive getCameras
+2022-06-29 01:58:27.866[debug] startUrl http://localhost:3000
+2022-06-29 01:58:28.975[verbose] Receive setVideoLayerPosition 10 10
+2022-06-29 01:58:28.977[verbose] Receive setVideoLayerSize 1280 720
+2022-06-29 01:58:28.979[debug] Receive getCameras

@@ -1,0 +1,86 @@
+{
+  "name": "electron-react-typescript",
+  "version": "0.0.0",
+  "author": "WistronITS",
+  "private": true,
+  "main": "build/main.js",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "electron-settings": "^4.0.2",
+    "electron-window-state": "^5.0.3",
+    "i18next": "^21.6.14",
+    "i18next-browser-languagedetector": "^6.1.3",
+    "i18next-http-backend": "^1.3.2",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.15.6",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0",
+    "winston": "^3.6.0",
+    "winston-daily-rotate-file": "^4.6.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.179",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "17.1.0",
+    "electron-builder": "^22.14.13",
+    "electron-debug": "^3.2.0",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-rebuild": "^3.2.7",
+    "rimraf": "^3.0.2",
+    "wait-on": "^6.0.1"
+  },
+  "scripts": {
+    "react:start": "cross-env BROWSER=none react-scripts start",
+    "react:build": "cross-env PUBLIC_URL=./ react-scripts build",
+    "react:test": "react-scripts test",
+    "react:eject": "react-scripts eject",
+    "typescript:watch": "tsc --watch -p ./main/tsconfig.json",
+    "typescript:build": "tsc -p ./main/tsconfig.json",
+    "electron:start": "cross-env NODE_ENV=development PORT=3000 electron .",
+    "electron:rebuild": "electron-rebuild -f --version 17.1.0",
+    "start:watch": "concurrently -k \"yarn typescript:watch\" \"yarn react:start\"",
+    "start:all": "concurrently -k \"yarn start:watch\" \"wait-on http://localhost:3000 && yarn electron:start\"",
+    "build:script": "rimraf ./build && yarn react:build && yarn typescript:build",
+    "build:package": "rimraf ./dist && electron-builder build -c.extraMetadata.main=build/main.js",
+    "build:all": "yarn build:script && yarn build:package"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "productName": "App",
+    "appId": "com.wistonits.app",
+    "asar": true,
+    "electronVersion": "17.1.0",
+    "asarUnpack": [],
+    "win": {
+      "target": "dir",
+      "icon": "public/logo512.png"
+    }
+  }
+}

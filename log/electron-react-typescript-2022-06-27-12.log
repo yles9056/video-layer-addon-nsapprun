@@ -1,0 +1,125 @@
+2022-06-27 12:55:16.672[debug] startUrl http://localhost:3000
+2022-06-27 12:55:18.064[verbose] Receive setVideoLayerPosition 10 721
+2022-06-27 12:55:18.065[verbose] Receive setVideoLayerSize 1420 637
+2022-06-27 12:55:18.066[debug] Receive getCameras
+2022-06-27 12:55:18.083[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:55:18.084[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:55:18.085[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:55:18.170[debug] get locationId and print it
+2022-06-27 12:55:18.172[debug] 0x14100000047d80b4
+2022-06-27 12:55:18.346[debug] Receive getCameras
+2022-06-27 12:55:18.348[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:55:18.348[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:55:18.348[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:55:18.372[debug] get locationId and print it
+2022-06-27 12:55:18.372[debug] 0x14100000047d80b4
+2022-06-27 12:55:18.381[debug] Receive getCameras
+2022-06-27 12:55:18.382[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:55:18.383[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:55:18.383[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:55:18.409[debug] get locationId and print it
+2022-06-27 12:55:18.409[debug] 0x14100000047d80b4
+2022-06-27 12:55:53.067[debug] Receive openCamera
+2022-06-27 12:55:53.068[debug] Call openCamera in addon.cpp
+2022-06-27 12:56:05.190[debug] Receive closeCamera
+2022-06-27 12:56:08.046[debug] Receive openCamera
+2022-06-27 12:56:08.047[debug] Call openCamera in addon.cpp
+2022-06-27 12:56:12.191[debug] Receive getCameras
+2022-06-27 12:56:12.193[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:12.193[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:12.194[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:12.485[debug] get locationId and print it
+2022-06-27 12:56:12.485[debug] 0x14100000047d80b4
+2022-06-27 12:56:12.507[debug] Receive getCameras
+2022-06-27 12:56:12.509[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:12.509[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:12.510[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:12.794[debug] get locationId and print it
+2022-06-27 12:56:12.795[debug] 0x14100000047d80b4
+2022-06-27 12:56:19.626[debug] Receive closeCamera
+2022-06-27 12:56:20.184[debug] Receive openCamera
+2022-06-27 12:56:20.184[debug] Call openCamera in addon.cpp
+2022-06-27 12:56:33.363[debug] Receive closeCamera
+2022-06-27 12:56:33.530[debug] Receive closeCamera
+2022-06-27 12:56:33.885[debug] Receive closeCamera
+2022-06-27 12:56:34.051[debug] Receive closeCamera
+2022-06-27 12:56:35.142[debug] Receive getCameras
+2022-06-27 12:56:35.144[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:35.144[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:35.144[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:35.173[debug] get locationId and print it
+2022-06-27 12:56:35.173[debug] 0x14100000047d80b4
+2022-06-27 12:56:35.315[debug] Receive getCameras
+2022-06-27 12:56:35.316[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:35.317[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:35.317[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:35.345[debug] get locationId and print it
+2022-06-27 12:56:35.346[debug] 0x14100000047d80b4
+2022-06-27 12:56:35.483[debug] Receive getCameras
+2022-06-27 12:56:35.484[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:35.485[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:35.485[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:35.513[debug] get locationId and print it
+2022-06-27 12:56:35.514[debug] 0x14100000047d80b4
+2022-06-27 12:56:35.642[debug] Receive getCameras
+2022-06-27 12:56:35.644[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:35.644[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:35.644[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:35.676[debug] get locationId and print it
+2022-06-27 12:56:35.676[debug] 0x14100000047d80b4
+2022-06-27 12:56:36.958[debug] Receive getCameras
+2022-06-27 12:56:36.959[debug] getCamerasMac []
+2022-06-27 12:56:36.959[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:36.989[debug] get locationId and print it
+2022-06-27 12:56:36.989[debug] 0x14100000047d80b4
+2022-06-27 12:56:37.004[debug] Receive getCameras
+2022-06-27 12:56:37.004[debug] getCamerasMac []
+2022-06-27 12:56:37.004[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:37.037[debug] get locationId and print it
+2022-06-27 12:56:37.037[debug] 0x14100000047d80b4
+2022-06-27 12:56:37.038[debug] Receive getCameras
+2022-06-27 12:56:37.038[debug] getCamerasMac []
+2022-06-27 12:56:37.038[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:37.065[debug] get locationId and print it
+2022-06-27 12:56:37.065[debug] 0x14100000047d80b4
+2022-06-27 12:56:37.121[debug] Receive openCamera
+2022-06-27 12:56:37.121[debug] Call openCamera in addon.cpp
+2022-06-27 12:56:37.302[debug] Receive openCamera
+2022-06-27 12:56:37.302[debug] Call openCamera in addon.cpp
+2022-06-27 12:56:39.726[debug] Receive getCameras
+2022-06-27 12:56:39.726[debug] getCamerasMac []
+2022-06-27 12:56:39.727[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:39.757[debug] get locationId and print it
+2022-06-27 12:56:39.757[debug] 0x14100000047d80b4
+2022-06-27 12:56:40.675[debug] Receive getCameras
+2022-06-27 12:56:40.677[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:40.677[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:40.677[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:40.703[debug] get locationId and print it
+2022-06-27 12:56:40.703[debug] 0x14100000047d80b4
+2022-06-27 12:56:40.711[debug] Receive getCameras
+2022-06-27 12:56:40.713[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:40.713[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:40.713[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:40.742[debug] get locationId and print it
+2022-06-27 12:56:40.742[debug] 0x14100000047d80b4
+2022-06-27 12:56:40.743[debug] Receive getCameras
+2022-06-27 12:56:40.744[debug] Serial number of camera: 0x14100000047d80b4
+20211109004
+2022-06-27 12:56:40.744[debug] getCamerasMac [{"name":"Kensington W2050 Full HD Auto Focus Pro Webcam","path":"0x14100000047d80b4","vid":"047d","pid":"80b4","serialNumber":"20211109004"}]
+2022-06-27 12:56:40.744[debug] start _getCamera in ipc.ts and set locationID
+2022-06-27 12:56:40.776[debug] get locationId and print it
+2022-06-27 12:56:40.777[debug] 0x14100000047d80b4
+2022-06-27 12:56:46.511[debug] Receive openCamera
+2022-06-27 12:56:46.512[debug] Call openCamera in addon.cpp

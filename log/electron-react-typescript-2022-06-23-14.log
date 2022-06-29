@@ -1,0 +1,6 @@
+2022-06-23 14:22:50.089[error] Failed to load UVCCamCtrl.node
+2022-06-23 14:22:50.675[debug] startUrl http://localhost:3000
+2022-06-23 14:22:52.433[verbose] Receive setVideoLayerPosition 10 677
+2022-06-23 14:22:55.356[verbose] Receive setVideoLayerSize 1260 594
+2022-06-23 14:26:09.461[debug] startUrl http://localhost:3000
+2022-06-23 14:26:10.786[verbose] Receive setVideoLayerPosition 10 677
