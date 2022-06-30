@@ -21,8 +21,8 @@ import { getCameras } from './util';
 function _getCameras() {
   let cameras = getCameras();
   // logger.debug('start _getCamera in ipc.ts and set locationID');
-  let intLocationId =  "0x14200000047d80b4";
-  setCameraLocationId(intLocationId);
+  //let intLocationId =  "0x14100000047d80c5";
+  //setCameraLocationId(intLocationId);
   let currentCameraLocationId = getCameraLocationId();
   logger.debug('get locationId and print it');
   logger.debug(currentCameraLocationId);

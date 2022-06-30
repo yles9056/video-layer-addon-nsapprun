@@ -60,6 +60,7 @@ function getCamerasMac() {
         return [];
     }
     var tmp = camCtrlLib.GetCamList();
+    util_1.logger.debug("getCamerasMac 1 ".concat(JSON.stringify(tmp)));
     // 整理格式
     var camInfos = lodash_1.default.chain(tmp)
         .compact()
@@ -68,13 +69,14 @@ function getCamerasMac() {
         var tmp = getCamInfoMac(x[1], x[0]);
         if (tmp.vid !== '' && tmp.pid !== '') { // 篩選有vid和pid的usb裝置
             res.push(tmp);
-        } /*else if (_.startsWith(tmp.name, 'FaceTime')) { // 加入內建攝影機
-          res.push(tmp);
-        }*/
+        }
+        else if (lodash_1.default.startsWith(tmp.name, 'FaceTime')) { // 加入內建攝影機
+            res.push(tmp);
+        }
         return true;
     }, [])
         .value();
-    util_1.logger.debug("getCamerasMac ".concat(JSON.stringify(camInfos)));
+    util_1.logger.debug("getCamerasMac 2 ".concat(JSON.stringify(camInfos)));
     return camInfos;
 }
 exports.getCamerasMac = getCamerasMac;

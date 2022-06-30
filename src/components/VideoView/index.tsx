@@ -11,11 +11,11 @@ const DisplayArea = () => {
     if (displayRef.current) {
       let rect = displayRef.current.getBoundingClientRect();
       console.log('DisplayArea', 'useVideoControl', rect);
-      // videoLayer.setVideoLayerPosition(rect.x, window.innerHeight - rect.y); //修改座標
-      videoLayer.setVideoLayerPosition(10, 10);
+      videoLayer.setVideoLayerPosition(rect.x, window.innerHeight - rect.bottom); //修改座標
+      //videoLayer.setVideoLayerPosition(10, 10);
       //videoLayer.setVideoLayerSize(rect.width, rect.height);
-      // videoLayer.setVideoLayerSize(rect.width, rect.height);
-      videoLayer.setVideoLayerSize(1280, 720);
+      videoLayer.setVideoLayerSize(rect.width, rect.height);
+      //videoLayer.setVideoLayerSize(1280, 720);
     } else {
       console.warn('DisplayArea', 'displayRef is null');
     }

@@ -1,4 +1,0 @@
-2022-06-28 18:48:17.449[debug] startUrl http://localhost:3000
-2022-06-28 18:48:18.346[verbose] Receive setVideoLayerPosition 10 726
-2022-06-28 18:48:18.352[verbose] Receive setVideoLayerSize 1420 642
-2022-06-28 18:48:18.358[debug] Receive getCameras

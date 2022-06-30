@@ -83,8 +83,8 @@ if (!gotTheLock) {
 }
 // Debug設定
 if (util_1.isDevelopment) {
-    var debug_1 = require('electron-debug');
-    debug_1({ devToolsMode: 'undocked' });
+    var debug_1 = require("electron-debug");
+    debug_1({ devToolsMode: "undocked" });
 }
 /**
  * 初始化設定檔
@@ -94,14 +94,14 @@ var initSettingsFile = function () {
     // 設定JSON設定檔的路徑、格式、名稱
     electron_settings_1.default.configure({
         dir: util_1.isDevelopment // 設定檔路徑，依照作業系統設定不同路徑，開發模式時則設定於專案資料夾內
-            ? path_1.default.resolve(__dirname, '..', 'config')
+            ? path_1.default.resolve(__dirname, "..", "config")
             : (0, util_1.byOS)((_a = {},
-                _a[util_1.OS.Windows] = path_1.default.resolve(electron_1.app.getPath('userData'), 'config'),
-                _a[util_1.OS.Mac] = path_1.default.resolve(electron_1.app.getPath('home'), 'Library', 'Konnect', 'config'),
-                _a), path_1.default.resolve(electron_1.app.getPath('userData'), 'config')),
+                _a[util_1.OS.Windows] = path_1.default.resolve(electron_1.app.getPath("userData"), "config"),
+                _a[util_1.OS.Mac] = path_1.default.resolve(electron_1.app.getPath("home"), "Library", "Konnect", "config"),
+                _a), path_1.default.resolve(electron_1.app.getPath("userData"), "config")),
         fileName: "".concat(electron_1.app.getName(), "_settings.json"),
         numSpaces: 2,
-        prettify: true
+        prettify: true,
     });
     // 檢查設定檔是否已存在並且可讀取，如果失敗則用空白設定檔複寫
     try {
@@ -119,7 +119,7 @@ var installExtensions = function () { return __awaiter(void 0, void 0, void 0, f
     var installer, forceDownload, extensions;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('electron-devtools-installer')); })];
+            case 0: return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require("electron-devtools-installer")); })];
             case 1:
                 installer = _a.sent();
                 forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
@@ -144,7 +144,7 @@ var createMainWindow = function () { return __awaiter(void 0, void 0, void 0, fu
             case 2:
                 mainWindowState = (0, electron_window_state_1.default)({
                     defaultWidth: electron_1.screen.getPrimaryDisplay().workArea.width,
-                    defaultHeight: electron_1.screen.getPrimaryDisplay().workArea.height
+                    defaultHeight: electron_1.screen.getPrimaryDisplay().workArea.height,
                 });
                 mainWindow = new electron_1.BrowserWindow({
                     x: mainWindowState.x,
@@ -154,30 +154,35 @@ var createMainWindow = function () { return __awaiter(void 0, void 0, void 0, fu
                     minWidth: 640,
                     minHeight: 480,
                     show: false,
-                    backgroundColor: 'white',
-                    icon: 'public/logo512.png',
+                    backgroundColor: "white",
+                    icon: "public/logo512.png",
                     webPreferences: {
                         nodeIntegration: false,
                         contextIsolation: true,
-                        preload: path_1.default.resolve(__dirname, 'preload.js'),
-                        devTools: util_1.isDevelopment
-                    }
+                        preload: path_1.default.resolve(__dirname, "preload.js"),
+                        devTools: util_1.isDevelopment,
+                    },
                 });
                 // 設定IPC事件處理
                 (0, ipc_1.setupCameraIpc)(electron_1.ipcMain, mainWindow);
                 (0, ipc_2.setupVideoLayerIpc)(electron_1.ipcMain, mainWindow);
-                // 初始化video layer
-                (0, util_2.initVideoLayer)(mainWindow.getNativeWindowHandle());
                 port = process.env.PORT || 3000;
                 startUrl = util_1.isDevelopment
                     ? "http://localhost:".concat(port)
-                    : "file://".concat(path_1.default.resolve(__dirname, 'index.html'));
+                    : "file://".concat(path_1.default.resolve(__dirname, "index.html"));
                 util_1.logger.debug("startUrl ".concat(startUrl));
                 mainWindow.loadURL(startUrl); // 主視窗讀取URL
-                mainWindow.once('ready-to-show', function () {
+                // 等主視窗出現後再執行
+                mainWindow.once("show", function () {
+                    // 初始化video layer
+                    if (mainWindow) {
+                        (0, util_2.initVideoLayer)(mainWindow.getNativeWindowHandle());
+                    }
+                });
+                mainWindow.once("ready-to-show", function () {
                     mainWindow === null || mainWindow === void 0 ? void 0 : mainWindow.show();
                 });
-                mainWindow.on('closed', function () {
+                mainWindow.on("closed", function () {
                     mainWindow = null;
                 });
                 return [2 /*return*/];
@@ -187,13 +192,13 @@ var createMainWindow = function () { return __awaiter(void 0, void 0, void 0, fu
 initSettingsFile();
 electron_1.app.whenReady().then(function () {
     createMainWindow();
-    electron_1.app.on('activate', function () {
+    electron_1.app.on("activate", function () {
         if (!electron_1.BrowserWindow.getAllWindows().length) {
             createMainWindow();
         }
     });
 });
-electron_1.app.on('second-instance', function (event, commandLine, workingDirectory) {
+electron_1.app.on("second-instance", function (event, commandLine, workingDirectory) {
     // Someone tried to run a second instance, we should focus our window.
     if (!lodash_1.default.isNil(mainWindow)) {
         if (mainWindow.isMinimized()) {
@@ -202,13 +207,13 @@ electron_1.app.on('second-instance', function (event, commandLine, workingDirect
         mainWindow.focus();
     }
 });
-electron_1.app.on('window-all-closed', function () {
+electron_1.app.on("window-all-closed", function () {
     /* if (process.platform !== 'darwin') {
       app.quit();
     } */
     electron_1.app.quit();
 });
-electron_1.app.on('before-quit', function () {
+electron_1.app.on("before-quit", function () {
     lodash_1.default.forEach(electron_1.BrowserWindow.getAllWindows(), function (window) {
         window.close();
     });

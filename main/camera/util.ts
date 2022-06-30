@@ -61,6 +61,7 @@ export function getCamerasMac() {
   }
 
   let tmp: string[] = camCtrlLib.GetCamList();
+  logger.debug(`getCamerasMac 1 ${JSON.stringify(tmp)}`);
   // 整理格式
   let camInfos = _.chain(tmp)
     .compact()
@@ -69,15 +70,15 @@ export function getCamerasMac() {
       let tmp = getCamInfoMac(x[1], x[0]);
       if (tmp.vid !== '' && tmp.pid !== '') { // 篩選有vid和pid的usb裝置
         res.push(tmp);
-      } /*else if (_.startsWith(tmp.name, 'FaceTime')) { // 加入內建攝影機
+      } else if (_.startsWith(tmp.name, 'FaceTime')) { // 加入內建攝影機
         res.push(tmp);
-      }*/
+      }
 
       return true;
     }, [] as ICamInfo[])
     .value();
 
-  logger.debug(`getCamerasMac ${JSON.stringify(camInfos)}`);
+  logger.debug(`getCamerasMac 2 ${JSON.stringify(camInfos)}`);
 
   return camInfos;
 }

@@ -28,8 +28,8 @@ var util_3 = require("./util");
 function _getCameras() {
     var cameras = (0, util_3.getCameras)();
     // logger.debug('start _getCamera in ipc.ts and set locationID');
-    var intLocationId = "0x14200000047d80b4";
-    (0, util_2.setCameraLocationId)(intLocationId);
+    //let intLocationId =  "0x14100000047d80c5";
+    //setCameraLocationId(intLocationId);
     var currentCameraLocationId = (0, util_2.getCameraLocationId)();
     util_1.logger.debug('get locationId and print it');
     util_1.logger.debug(currentCameraLocationId);

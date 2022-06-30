@@ -1,1 +1,0 @@
-cmd_Release/addon.node := c++ -bundle -stdlib=libc++ -arch x86_64 -arch arm64 -undefined dynamic_lookup -Wl,-search_paths_first -mmacosx-version-min=10.15 -arch x86_64 -L./Release -stdlib=libc++  -o Release/addon.node Release/obj.target/addon/addon.o Release/obj.target/addon/renderer_app.o 

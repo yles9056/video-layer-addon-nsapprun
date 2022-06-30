@@ -20,13 +20,13 @@
     self.sess = [[AVCaptureSession alloc] init];
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.sess];
     self.deviceList = [self getAllCameraDevices];
-    
+    [self.previewLayer setZPosition:999];
     // Default setting
     // Note: set the default device to list[0]
     self.resolution = AVCaptureSessionPreset1280x720;
     self.pos = @[@(0), @(0)];
     self.sz = @[@(400), @(200)];
-    self.device = self.deviceList[1];
+    self.device = self.deviceList[0];
     self.uniqueId = [self.device uniqueID];
 }
 
@@ -36,9 +36,9 @@
     CGFloat x_anchor = 0;
     CGFloat y_anchor = 0;
     CGFloat red = 0;
-    CGFloat green = 1;
+    CGFloat green = 0;
     CGFloat blue = 0;
-    CGFloat alpha = 1;
+    CGFloat alpha = 0;
 
     [self setLayerResizeMethod];
     [self setLayerBgColor:red green:green blue:blue alpha:alpha];
@@ -211,6 +211,13 @@
     }
 }
 
+- (void) resetInputSignal {
+    NSError* error;
+    AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
+    if ( [self.sess canAddInput:input] ) {
+        [self.sess addInput:input];
+    }
+}
 
 @end
 
@@ -224,94 +231,42 @@ int contextId = 0;
 @implementation ClientApplication : NSApplication
 @end
 
-
-@implementation appForThread
-- (void) runThread:(void**) handle {
-    self.condition = [[NSCondition alloc] init];
+void initVideoLayerMM(void** handle)
+{
     NSView *viewParent = static_cast<NSView*>(*reinterpret_cast<void**>(handle));
-    [NSThread detachNewThreadSelector:@selector(stickSubLayer:) toTarget:self withObject:viewParent];
-    [NSThread detachNewThreadSelector:@selector(runAppBackend) toTarget:self withObject:nil];
-}
-
-- (void) stickSubLayer:(NSView*) viewParent {
-    // [self.condition lock];
     winParent = [viewParent window];
     [viewParent setWantsLayer:YES];
-    
-    Log("Wait for getting contextId...");
-    // if (contextId == 0) [self.condition wait];
 
-    if (DEV) {
-        std::string msg = "contextId is " + std::to_string(contextId) + " in stickSubLayer.";
-        Log(msg.c_str());
-    }
-
-    std::cout << "----- stickSubLayer START -----" << std::endl;
-    // [videoLayer setContextId:contextId];
-    // [[[winParent contentView] layer] addSublayer:videoLayer];
-    // [client_app configLayer];
-
-    // for (AVCaptureInput* input in client_app.sess.inputs){
-    //     [client_app.sess removeInput:input];
-    // }
-
-    // [self.condition unlock];
-}
-
-- (void) runAppBackend{
-    // [self.condition lock];
     client_app = [[RendererApp alloc] init];
     [client_app initSessionLayer];
     dispatch_async(dispatch_get_main_queue(),^{
-        // std::cout << "----- runAppBackend START -----" << std::endl;
-        // contextId = [client_app getLayerId];
-        // std::string msg = "contextId is " + std::to_string(contextId) + " in runAppBackend.";
-        // Log(msg.c_str());
-        // [self.condition signal];
-        // [ClientApplication sharedApplication];
-
-        // [client_app.sess setSessionPreset:AVCaptureSessionPresetLow];
-        // std::string tmp = "0x14200000047d80b4";
-        // AVCaptureDevice* cam = [client_app getCameraDeviceByUniID:tmp];
-
-        // AVCaptureDevice* cam = client_app.device;
-        NSError* error;
-        AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:client_app.device error:&error];
-        if ( [client_app.sess canAddInput:input] ) {
-            [client_app.sess addInput:input];
-            [client_app.sess setSessionPreset:AVCaptureSessionPreset640x480];
-        }
-
-        AVCaptureVideoPreviewLayer* tmpLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:client_app.sess];
-        // client_app.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:client_app.sess];
-        // AVCaptureVideoPreviewLayer* tmpLayer = client_app.previewLayer;
-        
-        [tmpLayer setFrame:CGRectMake(0, 0, 640, 480)];
-        NSDictionary* dict = [[NSDictionary alloc] init];
-        CGSConnectionID connection_id = CGSMainConnectionID();
-        CAContext* remoteContext = [CAContext contextWithCGSConnection:connection_id options:dict];
-        [remoteContext setLayer:tmpLayer];
-        CAContextID contextID = [remoteContext contextId];
+        [client_app resetInputSignal];
+        CAContextID contextID = [client_app getLayerId];
         CALayerHost* tmpXLayer = [[CALayerHost alloc] init];
         [tmpXLayer setContextId:contextID];
         [[[winParent contentView] layer] addSublayer:tmpXLayer];
-        [tmpXLayer setAnchorPoint:CGPointMake(0, 0)];
-        [tmpXLayer setBounds:CGRectMake(0, 0, 640, 480)];
-        [tmpXLayer setBackgroundColor:CGColorCreateGenericRGB(1, 0, 0, 0.5)];
-        [tmpXLayer setPosition:CGPointMake(200, 200)];
+        [client_app configLayer];
+
+        /* -- Backend running for delivering signal -- */
         [NSApp run];
-        std::cout << "----- runAppBackend STOP -----" << std::endl;
+
+        NSPort *sendPort = [[NSMachBootstrapServer sharedInstance] portForName:@"net.kristopherjohnson.KJMachPortServer"];
+        if (sendPort == nil) {
+            NSLog(@"Unable to connect to server port");
+            return;
+        }
+
+        NSPortMessage *message = [[NSPortMessage alloc]
+                              initWithSendPort:sendPort
+                              receivePort:nil
+                              components:nil];
+        message.msgid = 1;
+
+        NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5.0];
+        if (![message sendBeforeDate:timeout]) {
+            NSLog(@"Send failed");
+        }
     });
-    // [self.condition unlock];
-}
-@end
-
-appForThread* app;
-
-void initVideoLayerMM(void** handle)
-{
-    app = [[appForThread alloc] init];
-    [app runThread:handle];
 }
 
 void destroyVideoLayerMM()

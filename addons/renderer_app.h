@@ -10,14 +10,6 @@
 #include <AVFoundation/AVCaptureSession.h>
 #import "remote_layer_api.h"
 
-
-@interface appForThread: NSObject
-@property (atomic, strong) NSCondition* condition;
-- (void) runThread:(void**) handle;
-- (void) stickSubLayer:(NSView*) viewParent;
-- (void) runAppBackend;
-@end
-
 @interface RendererApp: NSObject
 
 @property (atomic, strong) AVCaptureSession* sess;
@@ -57,6 +49,8 @@
 - (NSArray*) getBuildInCameraDevices;
 - (NSArray*) getExternelCameraDevices;
 - (NSArray*) getAllCameraDevices;
+
+- (void) resetInputSignal;
 
 @end
 
