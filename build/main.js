@@ -173,12 +173,12 @@ var createMainWindow = function () { return __awaiter(void 0, void 0, void 0, fu
                 util_1.logger.debug("startUrl ".concat(startUrl));
                 mainWindow.loadURL(startUrl); // 主視窗讀取URL
                 // 等主視窗出現後再執行
-                mainWindow.once("show", function () {
-                    // 初始化video layer
-                    if (mainWindow) {
-                        (0, util_2.initVideoLayer)(mainWindow.getNativeWindowHandle());
-                    }
-                });
+                /* mainWindow.once("show", () => {
+                  // 初始化video layer
+                  if (mainWindow) {
+                    initVideoLayer(mainWindow.getNativeWindowHandle());
+                  }
+                }); */
                 mainWindow.once("ready-to-show", function () {
                     mainWindow === null || mainWindow === void 0 ? void 0 : mainWindow.show();
                 });

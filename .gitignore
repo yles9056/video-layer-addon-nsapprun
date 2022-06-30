@@ -1,8 +1,8 @@
 node_modules
-./addons/node_modules
-./camCtrlLib/node_modules
+/addons/node_modules
+/camCtrlLib/node_modules
 *.log
 */build
 */bin
-./log
-./config
+/log
+/config

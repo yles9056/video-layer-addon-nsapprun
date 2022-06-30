@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ICamInfoUI } from '../../global';
+import _ from "lodash";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ICamInfoUI } from "../../global";
 
 const { camera, videoLayer } = window;
 
@@ -10,14 +10,17 @@ const DisplayArea = () => {
   const updateVideoLayerSize = useCallback(() => {
     if (displayRef.current) {
       let rect = displayRef.current.getBoundingClientRect();
-      console.log('DisplayArea', 'useVideoControl', rect);
-      videoLayer.setVideoLayerPosition(rect.x, window.innerHeight - rect.bottom); //修改座標
+      console.log("DisplayArea", "useVideoControl", rect);
+      videoLayer.setVideoLayerPosition(
+        rect.x,
+        window.innerHeight - rect.bottom
+      ); //修改座標
       //videoLayer.setVideoLayerPosition(10, 10);
       //videoLayer.setVideoLayerSize(rect.width, rect.height);
       videoLayer.setVideoLayerSize(rect.width, rect.height);
       //videoLayer.setVideoLayerSize(1280, 720);
     } else {
-      console.warn('DisplayArea', 'displayRef is null');
+      console.warn("DisplayArea", "displayRef is null");
     }
   }, []);
 
@@ -35,7 +38,7 @@ const DisplayArea = () => {
   }, [updateVideoLayerSize]);
 
   return (
-    <div style={{ flexGrow: 1, background: 'lightgray' }} ref={displayRef}>
+    <div style={{ flexGrow: 1, background: "lightgray" }} ref={displayRef}>
       display area
     </div>
   );
@@ -45,18 +48,20 @@ const DisplayArea = () => {
 const CameraControlBar = () => {
   const [_cameras, setCameras] = useState<ICamInfoUI[]>([]); // 攝影機清單
   const isSelectedCameraChanged = useRef(false); // 使用者是否變更過攝影機清單
-  const [selectedCameraPath, setSelectedCameraPath] = useState(''); // 目前選定攝影機的path/locationId
+  const [selectedCameraPath, setSelectedCameraPath] = useState(""); // 目前選定攝影機的path/locationId
 
   // 比較新獲取到的攝影機清單與目前清單是否有差異，有差異才會更新
   const compareData = useCallback(
     (newData: ICamInfoUI[]) => {
-      console.log('CameraBar', 'compareData', newData);
+      console.log("CameraBar", "compareData", newData);
       if (_cameras.length !== newData.length || !_.isEqual(_cameras, newData)) {
         setCameras(newData);
       }
 
       let _newSelectedCamera = _.find(newData, { isChecked: true });
-      let newSelectedCameraPath = _newSelectedCamera ? _newSelectedCamera.path : '';
+      let newSelectedCameraPath = _newSelectedCamera
+        ? _newSelectedCamera.path
+        : "";
       if (newSelectedCameraPath !== selectedCameraPath) {
         setSelectedCameraPath(newSelectedCameraPath);
       }
@@ -73,7 +78,7 @@ const CameraControlBar = () => {
 
   // 發送切換攝影機請求至後端，並獲取新的攝影機清單
   const setCamera = useCallback(() => {
-    if (selectedCameraPath === '') {
+    if (selectedCameraPath === "") {
     } else {
       camera.setCamera(selectedCameraPath).then((newData) => {
         compareData(newData);
@@ -103,7 +108,7 @@ const CameraControlBar = () => {
     if (newSelectedCamera) {
       setSelectedCameraPath(e.target.value);
     } else {
-      setSelectedCameraPath('');
+      setSelectedCameraPath("");
     }
   };
 
@@ -120,14 +125,14 @@ const CameraControlBar = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: '20px',
-        marginBottom: '20px'
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: "20px",
+        marginBottom: "20px",
       }}
     >
-      <label htmlFor="cameras" style={{ marginRight: '0.2em' }}>
+      <label htmlFor="cameras" style={{ marginRight: "0.2em" }}>
         Choose a camera:
       </label>
       <select
@@ -135,7 +140,7 @@ const CameraControlBar = () => {
         id="cameras"
         value={selectedCameraPath}
         onChange={changeCamera}
-        style={{ marginRight: '1em' }}
+        style={{ marginRight: "1em" }}
       >
         <option value="" disabled>
           --
@@ -148,10 +153,10 @@ const CameraControlBar = () => {
           );
         })}
       </select>
-      <button onClick={getCameras} style={{ marginRight: '1em' }}>
+      <button onClick={getCameras} style={{ marginRight: "1em" }}>
         Refresh camera list
       </button>
-      <button onClick={openCamera} style={{ marginRight: '0.2em' }}>
+      <button onClick={openCamera} style={{ marginRight: "0.2em" }}>
         Open camera
       </button>
       <button onClick={closeCamera}>Close camera</button>
@@ -163,10 +168,10 @@ const VideoView = () => {
   return (
     <div
       style={{
-        width: 'calc(100vw - 20px)',
-        height: 'calc(100vh - 30px)',
-        display: 'flex',
-        flexDirection: 'column'
+        width: "calc(100vw - 20px)",
+        height: "calc(100vh - 30px)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <DisplayArea />

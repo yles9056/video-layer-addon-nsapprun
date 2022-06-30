@@ -115,12 +115,12 @@ const createMainWindow = async () => {
   mainWindow.loadURL(startUrl); // 主視窗讀取URL
 
   // 等主視窗出現後再執行
-  mainWindow.once("show", () => {
+  /* mainWindow.once("show", () => {
     // 初始化video layer
     if (mainWindow) {
       initVideoLayer(mainWindow.getNativeWindowHandle());
     }
-  });
+  }); */
 
   mainWindow.once("ready-to-show", () => {
     mainWindow?.show();
