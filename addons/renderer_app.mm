@@ -107,17 +107,6 @@
     return contextId;
 }
 
-- (bool) configSessionDevice:(std::string)uniId_string {
-
-    AVCaptureDevice* inputDevice = [self getCameraDeviceByUniID:uniId_string];
-    if (inputDevice) {
-        [self setSessionInput:self.sess device:inputDevice];
-        return true;
-    } else {
-        return false;
-    }
-}
-
 - (void) startSession {
     [self.sess startRunning];
 }
@@ -187,13 +176,13 @@
             break;
         }
     }
-    NSAssert(targetDevice != nil, @"Can not find the device.");
 
     if(targetDevice) {
         Log(("Get the device with uniqueId: "+uniId_string).c_str());
     } else {
         Log("Can not find any device by giving uniqueId.");
     }
+    
     return targetDevice;
 }
 
@@ -291,31 +280,24 @@ std::string getCameraLocationIdMM()
 
 bool setCameraLocationIdMM(std::string uniId_string)
 {
-    NSString* uniId_ns = [NSString stringWithCString:uniId_string.c_str() 
-                                   encoding:[NSString defaultCStringEncoding]];
-    if (uniId_ns == client_app.uniqueId) return true;
+    NSString* uniId_ns = [NSString stringWithCString:uniId_string.c_str() encoding:[NSString defaultCStringEncoding]];
+    AVCaptureDevice* device = [client_app getCameraDeviceByUniID:uniId_string];
+    
+    if (!(device)) return false;
 
     bool isRunning = [client_app.sess isRunning];
-    if (isRunning) {
-        // Session is running, remove the device and then add another one
-        Log("Session is running.. Remove the old one.");
-        [client_app stopSession];
-        for (AVCaptureInput* input in client_app.sess.inputs){
+    if (isRunning) { [client_app stopSession];}
+
+    Log("Remove the old one.");
+    for (AVCaptureInput* input in client_app.sess.inputs){
             [client_app.sess removeInput:input];
-        }
-        Log("Remove done.");
     }
+    [client_app setSessionInput:client_app.sess device:device];
+    client_app.device = device;
+    client_app.uniqueId = [device uniqueID];
     
-    bool isConfigSucceed = [client_app configSessionDevice:uniId_string];
-    if (isConfigSucceed) {
-        Log(("Switch to device "+std::string([uniId_ns UTF8String])+" in objc.").c_str());
-        if (isRunning) [client_app startSession];
-        client_app.uniqueId = uniId_ns;
-        return true;
-    } else {
-        Log("Switch fail in objc.");
-        return false;
-    }
+    if (isRunning) {Log(("Switch to device "+std::string([uniId_ns UTF8String])+" in objc.").c_str());[client_app startSession];}
+    return true;
 }
 
 bool openCameraMM()

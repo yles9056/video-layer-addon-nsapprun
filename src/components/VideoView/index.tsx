@@ -91,7 +91,7 @@ const CameraControlBar = () => {
     //console.log('test');
     getCameras();
     //console.log('test');
-  }, [getCameras]);
+  }, []);
 
   // 使用者切換攝影機後發送請求至後端
   useEffect(() => {

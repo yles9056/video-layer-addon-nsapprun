@@ -37,7 +37,6 @@
 - (void) setLayerPosition:(NSArray*)pos;
 - (CAContextID) getLayerId;
 
-- (bool) configSessionDevice:(std::string)uniId_string;
 - (AVCaptureDevice*) getCameraDeviceByUniID:(std::string)uniId_string;
 - (AVCaptureDeviceInput*) getDeviceInputByDevice:(AVCaptureDevice*)device;
 - (void) setSessionInput:(AVCaptureSession*)sess device:(AVCaptureDevice*)d;

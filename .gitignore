@@ -6,3 +6,4 @@ node_modules
 */bin
 /log
 /config
+/build
