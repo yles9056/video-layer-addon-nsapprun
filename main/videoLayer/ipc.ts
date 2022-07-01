@@ -26,6 +26,7 @@ export function setupVideoLayerIpc(
     frame: false,
     parent: mainWindow,
     opacity: 1,
+    hasShadow: false,
   });
   childWindow.setIgnoreMouseEvents(true);
 
@@ -48,6 +49,12 @@ export function setupVideoLayerIpc(
   childWindow.once("show", () => {
     initVideoLayer(childWindow.getNativeWindowHandle());
   });
+
+  childWindow.on('focus', () => {
+    if (mainWindow) {
+      mainWindow.focus();
+    }
+  })
 
   mainWindow?.once("show", () => {
     childWindow.show();

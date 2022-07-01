@@ -37,7 +37,7 @@
             "xcode_settings": {
                 "OTHER_CPLUSPLUSFLAGS" : ['-ObjC++',"-std=c++14","-stdlib=libc++", "-v", "-arch x86_64", "-arch arm64"],
                 "OTHER_LDFLAGS": ["-stdlib=libc++", "-arch x86_64", "-arch arm64"],
-                "MACOSX_DEPLOYMENT_TARGET": "10.11",
+                "MACOSX_DEPLOYMENT_TARGET": "10.15",
                 "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
                 "GCC_ENABLE_CPP_RTTI": "YES"
             }

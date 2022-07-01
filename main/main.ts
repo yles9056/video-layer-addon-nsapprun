@@ -7,9 +7,10 @@ import windowStateKeeper from "electron-window-state";
 import _ from "lodash";
 import path from "path";
 import { setupCameraIpc } from "./camera/ipc";
-import { byOS, isDevelopment, logger, OS, resolveHtmlPath } from "./util";
+import { byOS, isDevelopment, logger, OS } from "./util";
 import { setupVideoLayerIpc } from "./videoLayer/ipc";
-import { destroyVideoLayer, initVideoLayer } from "./videoLayer/util";
+import { destroyVideoLayer } from "./videoLayer/util";
+import * as usbDetect from 'usb-detection';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -132,6 +133,7 @@ const createMainWindow = async () => {
 };
 
 initSettingsFile();
+usbDetect.startMonitoring();
 
 app.whenReady().then(() => {
   createMainWindow();
@@ -164,5 +166,6 @@ app.on("before-quit", () => {
   _.forEach(BrowserWindow.getAllWindows(), (window) => {
     window.close();
   });
+  usbDetect.stopMonitoring();
   destroyVideoLayer();
 });

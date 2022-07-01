@@ -20,7 +20,8 @@
     self.sess = [[AVCaptureSession alloc] init];
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.sess];
     self.deviceList = [self getAllCameraDevices];
-    [self.previewLayer setZPosition:999];
+    //[self.previewLayer setZPosition:999];
+    [self.previewLayer setDrawsAsynchronously:YES];
     // Default setting
     // Note: set the default device to list[0]
     self.resolution = AVCaptureSessionPreset1280x720;
@@ -228,7 +229,9 @@ void initVideoLayerMM(void** handle)
 
     client_app = [[RendererApp alloc] init];
     [client_app initSessionLayer];
-    dispatch_async(dispatch_get_main_queue(),^{
+    //dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue,^{
         [client_app resetInputSignal];
         CAContextID contextID = [client_app getLayerId];
         CALayerHost* tmpXLayer = [[CALayerHost alloc] init];
@@ -237,24 +240,9 @@ void initVideoLayerMM(void** handle)
         [client_app configLayer];
 
         /* -- Backend running for delivering signal -- */
-        [NSApp run];
-
-        NSPort *sendPort = [[NSMachBootstrapServer sharedInstance] portForName:@"net.kristopherjohnson.KJMachPortServer"];
-        if (sendPort == nil) {
-            NSLog(@"Unable to connect to server port");
-            return;
-        }
-
-        NSPortMessage *message = [[NSPortMessage alloc]
-                              initWithSendPort:sendPort
-                              receivePort:nil
-                              components:nil];
-        message.msgid = 1;
-
-        NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5.0];
-        if (![message sendBeforeDate:timeout]) {
-            NSLog(@"Send failed");
-        }
+        NSApplication *myApplication = [ClientApplication sharedApplication];
+        [myApplication run];
+        //[NSApp run];
     });
 }
 
@@ -303,12 +291,24 @@ bool setCameraLocationIdMM(std::string uniId_string)
 bool openCameraMM()
 {
     [client_app startSession];
+    /* dispatch_async(dispatch_get_main_queue(),^{
+        NSApplication *myApplication = [ClientApplication sharedApplication];
+        if (![myApplication isRunning]) {
+            [myApplication run];
+        }
+    }); */
     return true;
 }
 
 bool closeCameraMM()
 {
     [client_app stopSession];
+    /* dispatch_async(dispatch_get_main_queue(),^{
+        NSApplication *myApplication = [ClientApplication sharedApplication];
+        if ([myApplication isRunning]) {
+            [myApplication stop:nil];
+        }
+    }); */
     return true;
 }
 
