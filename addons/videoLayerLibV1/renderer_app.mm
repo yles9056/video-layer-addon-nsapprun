@@ -230,6 +230,7 @@ void initVideoLayerMM(void** handle)
     client_app = [[RendererApp alloc] init];
     [client_app initSessionLayer];
     //dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_async(queue,^{
         [client_app resetInputSignal];

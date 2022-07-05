@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "nan": "^2.15.0",
+    "node-addon-api": "^5.0.0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "electron-rebuild": "^3.2.7"
+  },
+  "scripts": {
+    "copyfiles": "copyfiles -u 2 build/Release/addon.node ../../build",
+    "build": "electron-rebuild -f xcode --version 17.1.0"
+  }
+}

@@ -9,7 +9,7 @@
     "electron-rebuild": "^3.2.7"
   },
   "scripts": {
-    "copyfiles": "copyfiles -u 2 build/Release/addon.node ../build",
+    "copyfiles": "copyfiles -u 2 build/Release/addon.node ../../build",
     "build": "electron-rebuild -f xcode --version 17.1.0"
   }
 }
