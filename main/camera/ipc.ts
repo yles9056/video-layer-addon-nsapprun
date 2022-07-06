@@ -12,6 +12,9 @@ import {
 import { ECameraEvent } from "./const";
 import { ICamInfoUI } from "./interface";
 import { getCameras } from "./util";
+import usbDetect from "usb-detection";
+
+let _mainWindow: BrowserWindow | undefined = undefined;
 
 /**
  * 整理攝影機清單以便回傳給前端
@@ -19,9 +22,6 @@ import { getCameras } from "./util";
  */
 function _getCameras() {
   let cameras = getCameras();
-  // logger.debug('start _getCamera in ipc.ts and set locationID');
-  //let intLocationId =  "0x14100000047d80c5";
-  //setCameraLocationId(intLocationId);
   let currentCameraLocationId = getCameraLocationId();
   logger.debug("get locationId and print it");
   logger.debug(currentCameraLocationId);
@@ -41,6 +41,22 @@ function _getCameras() {
  * @param mainWindow 主視窗
  */
 export function setupCameraIpc(ipcMain: IpcMain, mainWindow?: BrowserWindow) {
+  _mainWindow = mainWindow;
+
+  usbDetect.startMonitoring();
+
+  _mainWindow?.on("closed", () => {
+    usbDetect.stopMonitoring();
+  });
+
+  usbDetect.on("change", (device) => {
+    logger.info(`usbDetect change\n${JSON.stringify(device)}`);
+    // AVCapture需要一點時間才能將新的攝影機設定好
+    setTimeout(() => {
+      _mainWindow?.webContents.send(ECameraEvent.onCamerasChanged);
+    }, 2 * 1000);
+  });
+
   // 前端請求打開攝影機
   ipcMain.on(ECameraEvent.openCamera, (event) => {
     logger.debug(`Receive ${ECameraEvent.openCamera}`);

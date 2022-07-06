@@ -31,6 +31,7 @@ export function setupVideoLayerIpc(
     frame: false,
     parent: mainWindow,
     opacity: 1,
+    title: "VideoLayer Preview",
   });
   childWindow.setIgnoreMouseEvents(true);
 

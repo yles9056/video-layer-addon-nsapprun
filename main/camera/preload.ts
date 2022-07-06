@@ -1,8 +1,8 @@
-import { contextBridge, ipcRenderer } from 'electron';
-import { ECameraEvent } from './const';
-import { ICamInfoUI } from './interface';
+import { contextBridge, ipcRenderer } from "electron";
+import { ECameraEvent } from "./const";
+import { ICamInfoUI } from "./interface";
 
-contextBridge.exposeInMainWorld('camera', {
+contextBridge.exposeInMainWorld("camera", {
   openCamera() {
     ipcRenderer.send(ECameraEvent.openCamera);
   },
@@ -14,5 +14,14 @@ contextBridge.exposeInMainWorld('camera', {
   },
   setCamera(locationId: string): Promise<ICamInfoUI[]> {
     return ipcRenderer.invoke(ECameraEvent.setCamera, locationId);
-  }
+  },
+  onCamerasChanged(func: () => void): () => void {
+    const listener = (event: Electron.IpcRendererEvent) => {
+      func();
+    };
+    ipcRenderer.on(ECameraEvent.onCamerasChanged, listener);
+    return () => {
+      ipcRenderer.removeListener(ECameraEvent.onCamerasChanged, listener);
+    };
+  },
 });

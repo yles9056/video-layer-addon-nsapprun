@@ -15,10 +15,7 @@ const DisplayArea = () => {
         rect.x,
         window.innerHeight - rect.bottom
       ); //修改座標
-      //videoLayer.setVideoLayerPosition(10, 10);
-      //videoLayer.setVideoLayerSize(rect.width, rect.height);
       videoLayer.setVideoLayerSize(rect.width, rect.height);
-      //videoLayer.setVideoLayerSize(1280, 720);
     } else {
       console.warn("DisplayArea", "displayRef is null");
     }
@@ -88,10 +85,15 @@ const CameraControlBar = () => {
 
   // 初始化
   useEffect(() => {
-    //console.log('test');
     getCameras();
-    //console.log('test');
   }, []);
+
+  useEffect(() => {
+    let rmListenerFunc = camera.onCamerasChanged(getCameras);
+    return () => {
+      rmListenerFunc();
+    }
+  }, [getCameras]);
 
   // 使用者切換攝影機後發送請求至後端
   useEffect(() => {

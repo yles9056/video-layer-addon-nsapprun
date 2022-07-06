@@ -71,6 +71,8 @@ export interface ICamera {
   getCameras(): Promise<ICamInfoUI[]>;
   // 設定要使用的攝影機裝置
   setCamera(locationId: string): Promise<ICamInfoUI[]>;
+  // usb裝置插拔事件
+  onCamerasChanged(func: () => void): () => void;
 }
 
 export interface IVideoLayer {

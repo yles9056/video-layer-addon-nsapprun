@@ -10,9 +10,8 @@ import { setupCameraIpc } from "./camera/ipc";
 import { byOS, isDevelopment, logger, OS } from "./util";
 import { setupVideoLayerIpc } from "./videoLayerV1/ipc";
 import { destroyVideoLayer } from "./videoLayerV1/util";
-//import * as usbDetect from 'usb-detection';
 
-let mainWindow: BrowserWindow | null = null;
+let mainWindow: BrowserWindow | undefined = undefined;
 
 // 只允許開啟一個app
 const gotTheLock = app.requestSingleInstanceLock();
@@ -95,6 +94,7 @@ const createMainWindow = async () => {
     show: false,
     backgroundColor: "white",
     icon: "public/logo512.png",
+    title: "VideoLayer Demo App",
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -102,6 +102,10 @@ const createMainWindow = async () => {
       devTools: isDevelopment,
     },
   });
+
+  /* mainWindow.on("page-title-updated", function (e) {
+    e.preventDefault();
+  }); */
 
   // 設定IPC事件處理
   setupCameraIpc(ipcMain, mainWindow);
@@ -120,7 +124,7 @@ const createMainWindow = async () => {
   });
 
   mainWindow.on("closed", () => {
-    mainWindow = null;
+    mainWindow = undefined;
   });
 };
 
