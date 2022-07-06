@@ -13,8 +13,8 @@
 @end
 
 @implementation Client /*{
-    BOOL _responseReceived;
-}*/
+                        BOOL _responseReceived;
+                        }*/
 
 - (Client *)init {
     self = [super init];
@@ -89,19 +89,94 @@
     
     //_responseReceived = NO;
     self.responseReceived = NO;
-    NSString *uuid = [[NSUUID UUID] UUIDString];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setValue:@[@"test"] forKey:uuid];
-    if ([dict objectForKey:uuid]) {
-        
-    }
-    
     NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5.0];
     if (![message sendBeforeDate:timeout]) {
         NSLog(@"Send failed");
     }
     
     //while (!_responseReceived) {
+    while (!self.responseReceived) {
+        [runLoop runUntilDate:
+         [NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+}
+
+- (NSMutableData*) convertFloatToNSData:(float)floatdata {
+    NSMutableData* nsdata = [NSMutableData dataWithCapacity:0];
+    [nsdata appendBytes:&floatdata length:sizeof(float)];
+    return nsdata;
+}
+
+- (float) convertNSDataToFloat:(NSData*)nsdata {
+    float floatdata;
+    [nsdata getBytes:&floatdata length:sizeof(float)];
+    return floatdata;
+}
+
+- (NSString*) convertNSDataToNSString:(NSData*)nsdata {
+    NSString* nsstring = [[NSString alloc]
+                            initWithData:nsdata
+                            encoding:NSUTF8StringEncoding];
+    return nsstring;
+}
+
+- (NSData*) convertNSStringToNSData:(NSString*)nsstring {
+    NSData* nsdata = [nsstring dataUsingEncoding:NSUTF8StringEncoding];
+    return nsdata;
+}
+
+- (NSData*) convertNSArrayToNSData:(NSArray*)nsarray {
+    NSData *nsdata = [NSKeyedArchiver archivedDataWithRootObject:nsarray];
+    return nsdata;
+}
+
+- (NSArray*) convertNSDataToNSArray:(NSData*)nsdata {
+    NSArray *nsarray = [NSKeyedUnarchiver unarchiveObjectWithData:nsdata];
+    return nsarray;
+}
+
+- (NSData*) convertBoolToNSData:(bool)boolean {
+    NSMutableData* nsdata = [NSMutableData dataWithCapacity:0];
+    [nsdata appendBytes:&boolean length:sizeof(bool)];
+    return nsdata;
+}
+
+- (void)sendTestMessage {
+    NSPort *sendPort = [self serverPort];
+    if (sendPort == nil) {
+        NSLog(@"Unable to connect to server port");
+        return;
+    }
+    
+    NSPort *receivePort = [NSMachPort port];
+    receivePort.delegate = self;
+    
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    [runLoop addPort:receivePort forMode:NSDefaultRunLoopMode];
+    
+    float posX = 10.0;
+    float posY = 10.0;
+    NSMutableData* x_data = [self convertFloatToNSData:posX];
+    NSMutableData* y_data = [self convertFloatToNSData:posY];
+    NSData* pos_data = [self convertNSArrayToNSData:@[x_data, y_data]];
+    
+    NSData* data = [self convertNSStringToNSData:@"0x14100000047d80c5"];
+    
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    NSData *uuidData = [uuid dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSPortMessage *message = [[NSPortMessage alloc]
+                              initWithSendPort:sendPort
+                              receivePort:receivePort
+                              components:@[uuidData, pos_data]];
+    message.msgid = ServerSetVideoLayerSize;
+    
+    self.responseReceived = NO;
+    NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5.0];
+    if (![message sendBeforeDate:timeout]) {
+        NSLog(@"Send failed");
+    }
+    
     while (!self.responseReceived) {
         [runLoop runUntilDate:
          [NSDate dateWithTimeIntervalSinceNow:0.1]];

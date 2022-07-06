@@ -4,9 +4,9 @@ import { IVideoLayerLib } from './interface';
 
 let videoLayerLib: IVideoLayerLib | undefined = undefined;
 try {
-  videoLayerLib = require('../addon.node');
+  videoLayerLib = require('../VideoLayerLibV1.node');
 } catch (e) {
-  logger.error(`Failed to load addon.node`);
+  logger.error(`Failed to load VideoLayerLibV1.node`);
 }
 
 /**

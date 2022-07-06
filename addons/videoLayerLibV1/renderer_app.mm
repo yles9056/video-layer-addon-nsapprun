@@ -7,11 +7,12 @@
 #define Log(format, ...)
 #endif
 
+
 #import "renderer_app.h"
 
-@interface ClientApplication : NSApplication
+// @interface ClientApplication : NSApplication
 
-@end
+// @end
 
 @implementation RendererApp
 
@@ -20,15 +21,29 @@
     self.sess = [[AVCaptureSession alloc] init];
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.sess];
     self.deviceList = [self getAllCameraDevices];
-    //[self.previewLayer setZPosition:999];
-    [self.previewLayer setDrawsAsynchronously:YES];
-    // Default setting
-    // Note: set the default device to list[0]
     self.resolution = AVCaptureSessionPreset1280x720;
     self.pos = @[@(0), @(0)];
     self.sz = @[@(400), @(200)];
     self.device = self.deviceList[0];
     self.uniqueId = [self.device uniqueID];
+    self.notiCenter = [NSNotificationCenter defaultCenter];
+    self.add =[self.notiCenter addObserverForName:AVCaptureDeviceWasConnectedNotification
+                                        object:nil
+                                         queue:nil
+                                    usingBlock:^(NSNotification *note)
+                                                {
+                                                    NSLog(@"Add!");
+                                                    self.deviceList = [self getAllCameraDevices];
+                                                }];
+
+    self.remove = [self.notiCenter addObserverForName:AVCaptureDeviceWasDisconnectedNotification
+                                                object:nil
+                                                queue:nil
+                                            usingBlock:^(NSNotification *note)
+                                                {
+                                                    NSLog(@"Remove!");
+                                                    self.deviceList = [self getAllCameraDevices];
+                                                }];
 }
 
 - (void) configLayer {
@@ -209,6 +224,11 @@
     }
 }
 
+- (void) refreshList {
+    self.deviceList = [self getAllCameraDevices];
+    std::cout << "Devices:" << [self.deviceList count] << std::endl;
+}
+
 @end
 
 // For addon.cpp matching
@@ -218,38 +238,26 @@ CALayerHost* videoLayer;
 NSWindow* winParent;
 int contextId = 0;
 
-@implementation ClientApplication : NSApplication
-@end
-
 void initVideoLayerMM(void** handle)
 {
+    
     NSView *viewParent = static_cast<NSView*>(*reinterpret_cast<void**>(handle));
     winParent = [viewParent window];
     [viewParent setWantsLayer:YES];
 
     client_app = [[RendererApp alloc] init];
     [client_app initSessionLayer];
-    //dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    //dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue,^{
-        [client_app resetInputSignal];
-        CAContextID contextID = [client_app getLayerId];
-        CALayerHost* tmpXLayer = [[CALayerHost alloc] init];
-        [tmpXLayer setContextId:contextID];
-        [[[winParent contentView] layer] addSublayer:tmpXLayer];
-        [client_app configLayer];
+    client_app.previewLayer.frame = viewParent.frame;
 
-        /* -- Backend running for delivering signal -- */
-        NSApplication *myApplication = [ClientApplication sharedApplication];
-        [myApplication run];
-        //[NSApp run];
-    });
+    [client_app resetInputSignal];
+    [[[winParent contentView] layer] addSublayer:client_app.previewLayer];
+    [client_app configLayer];
+            
 }
 
 void destroyVideoLayerMM()
 {
-    [videoLayer removeFromSuperlayer];
+    [client_app.previewLayer removeFromSuperlayer];
 }
 
 bool getCameraIsOpenMM()
@@ -292,24 +300,18 @@ bool setCameraLocationIdMM(std::string uniId_string)
 bool openCameraMM()
 {
     [client_app startSession];
-    /* dispatch_async(dispatch_get_main_queue(),^{
-        NSApplication *myApplication = [ClientApplication sharedApplication];
-        if (![myApplication isRunning]) {
-            [myApplication run];
-        }
-    }); */
     return true;
 }
 
 bool closeCameraMM()
 {
     [client_app stopSession];
-    /* dispatch_async(dispatch_get_main_queue(),^{
-        NSApplication *myApplication = [ClientApplication sharedApplication];
-        if ([myApplication isRunning]) {
-            [myApplication stop:nil];
-        }
-    }); */
+    if (NSThread.isMainThread) Log("Main thread...");
+
+    // dispatch_async(dispatch_get_global_queue(0, 0),^{
+    [client_app refreshList];
+    // });
+    
     return true;
 }
 

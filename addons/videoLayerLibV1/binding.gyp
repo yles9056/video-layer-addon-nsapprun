@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "target_name": "addon",
+            "target_name": "VideoLayerLibV1",
             
             "sources": ["addon.cpp", "renderer_app.mm" ],
             "include_dirs": [

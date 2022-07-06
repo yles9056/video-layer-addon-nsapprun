@@ -1,15 +1,22 @@
 {
+  "name": "addons",
+  "version": "1.0.0",
+  "main": "main.cc",
+  "license": "MIT",
   "dependencies": {
+    "async": "^3.2.4",
     "bindings": "^1.5.0",
-    "nan": "^2.15.0",
+    "nan": "^2.16.0",
     "node-addon-api": "^5.0.0"
   },
   "devDependencies": {
+    "@types/async": "^3.2.14",
     "copyfiles": "^2.4.1",
     "electron-rebuild": "^3.2.7"
   },
   "scripts": {
-    "copyfiles": "copyfiles -u 2 build/Release/addon.node ../../build",
-    "build": "electron-rebuild -f xcode --version 17.1.0"
+    "copyfiles": "copyfiles -u 2 build/Release/VideoLayerLibV2.node ../../build",
+    "build": "electron-rebuild -f xcode --version 17.1.0",
+    "buildAndCopy": "yarn build && yarn copyfiles"
   }
 }

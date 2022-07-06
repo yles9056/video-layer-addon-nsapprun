@@ -29,8 +29,6 @@ typedef NS_ENUM(uint32_t, ServerMsgId) {
     ServerSetCameraLocationId = 13,
     ServerGetCameraResolution = 14,
     ServerSetCameraResolution = 15,
-    ServerCreateMaskForCombobox = 16,
-    ServerDestroyMaskForCombobox = 17
 };
 
 #endif /* ServerProtocol_h */

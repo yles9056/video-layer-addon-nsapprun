@@ -9,6 +9,7 @@
   },
   "scripts": {
     "copyfiles": "copyfiles -u 2 build/Release/UVCCamCtrl.node ../../build",
-    "build": "electron-rebuild -f --version 17.1.0"
+    "build": "electron-rebuild -f --version 17.1.0",
+    "buildAndCopy": "yarn build && yarn copyfiles"
   }
 }

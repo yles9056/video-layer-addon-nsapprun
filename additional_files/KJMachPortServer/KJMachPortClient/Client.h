@@ -20,4 +20,6 @@
 
 - (void)sendEchoMessage:(NSString *)string;
 
+- (void)sendTestMessage;
+
 @end

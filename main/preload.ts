@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import './camera/preload';
-import './videoLayer/preload';
+import './videoLayerV1/preload';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {

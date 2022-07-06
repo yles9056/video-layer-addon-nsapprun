@@ -7,6 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Server.h"
 #import "ServerProtocol.h"
 
@@ -93,6 +94,46 @@
     return nsdata;
 }
 
+- (NSData*) convertNSArrayToNSData:(NSArray*)nsarray {
+    NSData *nsdata = [NSKeyedArchiver archivedDataWithRootObject:nsarray];
+    return nsdata;
+}
+
+- (NSArray*) convertNSDataToNSArray:(NSData*)nsdata {
+    NSArray *nsarray = [NSKeyedUnarchiver unarchiveObjectWithData:nsdata];
+    return nsarray;
+}
+
+- (NSData*) convertBoolToNSData:(bool)boolean {
+    NSMutableData* nsdata = [NSMutableData dataWithCapacity:0];
+    [nsdata appendBytes:&boolean length:sizeof(bool)];
+    return nsdata;
+}
+
+- (bool) convertNSDataToBool:(NSData*)nsdata {
+    bool boolean;
+    [nsdata getBytes:&boolean length:sizeof(bool)];
+    return boolean;
+}
+
+- (CAShapeLayer*) createMaskLayer:(CGFloat)_x y:(CGFloat)_y w:(CGFloat)_w h:(CGFloat)_h {
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    CGMutablePathRef maskPath = CGPathCreateMutable();
+    
+    CGFloat videoLayer_x = self.videoLayerHandler.previewLayer.position.x;
+    CGFloat videoLayer_y = self.videoLayerHandler.previewLayer.position.y;
+    CGFloat videoLayer_w = self.videoLayerHandler.previewLayer.frame.size.width;
+    CGFloat videoLayer_h = self.videoLayerHandler.previewLayer.frame.size.height;
+    
+    CGPathAddRect(maskPath, NULL, CGRectMake(videoLayer_x, videoLayer_y, videoLayer_w, videoLayer_h));
+    CGPathAddRect(maskPath, nil, CGRectMake(_x, _y, _w, _h));
+    
+    [maskLayer setPath:maskPath];
+    maskLayer.fillRule = kCAFillRuleEvenOdd;
+    CGPathRelease(maskPath);
+    return maskLayer;
+}
+
 - (void)handlePortMessage:(NSPortMessage *)message {
     switch (message.msgid) {
         case ServerMsgIdNotify:
@@ -122,7 +163,9 @@
             NSMutableData* h = [self convertFloatToNSData:h_c];
 
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @[w, h]] log:@"Sent GetVideoLayerSize response"];
+            NSData* sz_data = [self convertNSArrayToNSData:@[w, h]];
+            
+            [self replyMsg:message withComponents:@[uId, sz_data] log:@"Sent GetVideoLayerSize response"];
 
         } break;
 
@@ -130,7 +173,8 @@
             /* message.components type:NSArray meaning:sz(w,h) - (CGFloat,CGFloat) */
             if (message.components.count > 1) {
 
-                NSArray* sz = message.components[1];
+                NSData* sz_data_input = message.components[1];
+                NSArray* sz = [self convertNSDataToNSArray:sz_data_input];
                 CGFloat w = (CGFloat)[self convertNSDataToFloat:sz[0]];
                 CGFloat h = (CGFloat)[self convertNSDataToFloat:sz[1]];
 
@@ -144,7 +188,9 @@
                 NSMutableData* h_data = [self convertFloatToNSData:h_c];
 
                 NSData* uId = message.components[0];
-                [self replyMsg:message withComponents:@[uId, @[w_data, h_data]] log:@"Sent SetVideoLayerSize response"];
+                NSData* sz_data = [self convertNSArrayToNSData:@[w_data, h_data]];
+                
+                [self replyMsg:message withComponents:@[uId, sz_data] log:@"Sent SetVideoLayerSize response"];
             }
             
         } break;
@@ -161,7 +207,8 @@
             NSMutableData* y = [self convertFloatToNSData:y_c];
 
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @[x, y]] log:@"Sent GetVideoLayerPosition response"];
+            NSData* pos_data = [self convertNSArrayToNSData:@[x, y]];
+            [self replyMsg:message withComponents:@[uId, pos_data] log:@"Sent GetVideoLayerPosition response"];
 
         } break;
 
@@ -169,11 +216,12 @@
             /* message.components type:NSArray meaning:pos(x,y) - (CGFloat,CGFloat) */
             if (message.components.count > 1) {
 
-                NSArray* pos = message.components[1];
+                NSData* pos_data_input = message.components[1];
+                NSArray* pos = [self convertNSDataToNSArray:pos_data_input];
                 CGFloat x = (CGFloat)[self convertNSDataToFloat:pos[0]];
                 CGFloat y = (CGFloat)[self convertNSDataToFloat:pos[1]];
 
-                [self.videoLayerHandler setLayerSize:@[@(x), @(y)]];
+                [self.videoLayerHandler setLayerPosition:@[@(x), @(y)]];
 
                 /* Get the Position for response */
                 float x_c = (float)(self.videoLayerHandler.previewLayer.position.x);
@@ -183,7 +231,8 @@
                 NSMutableData* y_data = [self convertFloatToNSData:y_c];
 
                 NSData* uId = message.components[0];
-                [self replyMsg:message withComponents:@[uId, @[x_data, y_data]] log:@"Sent SetVideoLayerPosition response"];
+                NSData* pos_data = [self convertNSArrayToNSData:@[x_data, y_data]];
+                [self replyMsg:message withComponents:@[uId, pos_data] log:@"Sent SetVideoLayerPosition response"];
             }
         } break;
 
@@ -192,7 +241,9 @@
             [self.videoLayerHandler startSession];
 
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @(true)] log:@"Sent OpenCamera response"];
+            NSData* boolean = [self convertBoolToNSData:true];
+            
+            [self replyMsg:message withComponents:@[uId, boolean] log:@"Sent OpenCamera response"];
 
         } break;
 
@@ -201,7 +252,9 @@
             [self.videoLayerHandler stopSession];
 
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @(true)] log:@"Sent CloseCamera response"];
+            NSData* boolean = [self convertBoolToNSData:true];
+            
+            [self replyMsg:message withComponents:@[uId, boolean] log:@"Sent CloseCamera response"];
 
         } break;
         
@@ -213,7 +266,9 @@
             // [videoLayer removeFromSuperlayer];
 
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @(false)] log:@"Sent DestroyVideoLayer response"];
+            NSData* boolean = [self convertBoolToNSData:false];
+            
+            [self replyMsg:message withComponents:@[uId, boolean] log:@"Sent DestroyVideoLayer response"];
 
         }  break;
 
@@ -222,14 +277,16 @@
             bool isCamOpen = [self.videoLayerHandler.sess isRunning];
             
             NSData* uId = message.components[0];
-            [self replyMsg:message withComponents:@[uId, @(isCamOpen)] log:@"Sent GetCameraIsOpen response"];
+            NSData* boolean = [self convertBoolToNSData:isCamOpen];
+            
+            [self replyMsg:message withComponents:@[uId, boolean] log:@"Sent GetCameraIsOpen response"];
 
         } break;
         
         case ServerGetCameraLocationId: {
 
             NSString* deviceLocationId = self.videoLayerHandler.uniqueId;
-            NSData *locationId = [deviceLocationId dataUsingEncoding:NSUTF8StringEncoding];
+            NSData* locationId = [deviceLocationId dataUsingEncoding:NSUTF8StringEncoding];
 
             NSData* uId = message.components[0];
             [self replyMsg:message withComponents:@[uId, locationId] log:@"Sent GetCameraLocationId response"];
@@ -306,7 +363,36 @@
             }
 
         } break;
+            
+        case ServerCreateMaskForCombobox: {
+            /* message.components type:NSArray meaning:info(x,y,w,h) - (CGFloat,CGFloat,CGFloat,CGFloat) */
+            NSData* maskInfo = message.components[1];
+            NSArray* maskArray = [self convertNSDataToNSArray:maskInfo];
+            
+            CGFloat _x = (CGFloat)[self convertNSDataToFloat:maskArray[0]];
+            CGFloat _y = (CGFloat)[self convertNSDataToFloat:maskArray[1]];
+            CGFloat _w = (CGFloat)[self convertNSDataToFloat:maskArray[2]];
+            CGFloat _h = (CGFloat)[self convertNSDataToFloat:maskArray[3]];
+            
+            CAShapeLayer* maskLayer = [self createMaskLayer:_x y:_y w:_w h:_h];
+            self.videoLayerHandler.previewLayer.mask = maskLayer;
+            
+            NSData* uId = message.components[0];
+            
+            [self replyMsg:message withComponents:@[uId, maskInfo] log:@"Sent CreateMaskForCombobox response"];
+            
+        } break;
 
+        case ServerDestroyMaskForCombobox: {
+            
+            self.videoLayerHandler.previewLayer.mask = nil;
+            
+            NSData* uId = message.components[0];
+            NSData* boolean = [self convertBoolToNSData:true];
+            [self replyMsg:message withComponents:@[uId, boolean] log:@"Sent DestoryMaskForCombobox response"];
+            
+        } break;
+            
         default:
             NSLog(@"Unexpected message ID %u", (unsigned)message.msgid);
             break;

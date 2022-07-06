@@ -172,6 +172,7 @@
     std::string uniId_string = [uniId UTF8String];
     AVCaptureDevice* targetDevice = nil;
 
+    self.deviceList = [self getAllCameraDevices];
     for (AVCaptureDevice *device in self.deviceList)
     {
         if ([[device uniqueID] UTF8String] == uniId_string){

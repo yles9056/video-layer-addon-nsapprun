@@ -1,22 +1,21 @@
 // camera控制相關IPC事件處理
 
-import { BrowserWindow, IpcMain } from 'electron';
-import _ from 'lodash';
-import { logger } from '../util';
+import { BrowserWindow, IpcMain } from "electron";
+import _ from "lodash";
+import { logger } from "../util";
 import {
   getCameraLocationId,
   openCamera,
   closeCamera,
   setCameraLocationId,
-  setCameraResolution
-} from '../videoLayer/util';
-import { ECameraEvent } from './const';
-import { ICamInfoUI } from './interface';
-import { getCameras } from './util';
+} from "../videoLayerV1/util";
+import { ECameraEvent } from "./const";
+import { ICamInfoUI } from "./interface";
+import { getCameras } from "./util";
 
 /**
  * 整理攝影機清單以便回傳給前端
- * @returns 
+ * @returns
  */
 function _getCameras() {
   let cameras = getCameras();
@@ -24,13 +23,13 @@ function _getCameras() {
   //let intLocationId =  "0x14100000047d80c5";
   //setCameraLocationId(intLocationId);
   let currentCameraLocationId = getCameraLocationId();
-  logger.debug('get locationId and print it');
+  logger.debug("get locationId and print it");
   logger.debug(currentCameraLocationId);
   let camerasUI = _.map(cameras, (camera, index) => {
     return {
       ...camera,
       id: index.toString(),
-      isChecked: camera.path === currentCameraLocationId // 目前正在使用的攝影機為true，其餘為false
+      isChecked: camera.path === currentCameraLocationId, // 目前正在使用的攝影機為true，其餘為false
     } as ICamInfoUI;
   });
   return camerasUI;

@@ -6,14 +6,10 @@
 // The CGSConnectionID is used to create the CAContext in the process that is
 // going to share the CALayers that it is rendering to another process to
 // display
-#ifdef __cplusplus
 extern "C" {
-#endif
 typedef uint32_t CGSConnectionID;
 CGSConnectionID CGSMainConnectionID(void);
-#ifdef __cplusplus
-}
-#endif
+};
 
 // The CAContextID type identifies a CAContext across processes. This is the
 // token that is passed from the process that is sharing the CALayer that it is
@@ -25,7 +21,7 @@ typedef uint32_t CAContextID;
 // content displayed by that CALayerHost will be the content of the CALayer
 // that is set as the |layer| property on the CAContext
 @interface CAContext : NSObject
-+ (id)contextWithCGSConnection:(CAContextID)contextId options:(NSDictionary*)optionsDict;
++ (id)contextWithCGSConnection:(CAContextID)contextId options:(NSDictionary *)optionsDict;
 @property(readonly) CAContextID contextId;
 @property(retain) CALayer *layer;
 @end
@@ -39,4 +35,4 @@ typedef uint32_t CAContextID;
 @property CAContextID contextId;
 @end
 
-#endif // CA_LAYERS_REMOTE_LAYER_API
+#endif  // CA_LAYERS_REMOTE_LAYER_API

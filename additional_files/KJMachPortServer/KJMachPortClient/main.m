@@ -18,6 +18,9 @@ int main(int argc, const char * argv[]) {
         if (argc > 1 && strcmp("echo", argv[1]) == 0) {
             [client sendEchoMessage:@"Test Data"];
         }
+        else if (argc > 1 && strcmp("test", argv[1]) == 0) {
+            [client sendTestMessage];
+        }
         else {
             [client sendNotifyMessage];
         }

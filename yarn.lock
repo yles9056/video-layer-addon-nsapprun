@@ -1787,6 +1787,11 @@
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.2.tgz#ed4e0ad92306a704f9fb132a0cfcf77486dbe2bc"
   integrity sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==
 
+"@types/async@^3.2.14":
+  version "3.2.14"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.14.tgz#ae0508e863ebc4acd37a9f3c05feea718b35d00c"
+  integrity sha512-XDeV+E8zSz24BBlosqQZ+pYxCkC6feyanpPlacZiAXlvHAeAPZiNNdFb8uRbyudPFWjR92YFwZXkuBgrtA5J4w==
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   version "7.1.18"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.18.tgz#1a29abcc411a9c05e2094c98f9a1b7da6cdf49f8"

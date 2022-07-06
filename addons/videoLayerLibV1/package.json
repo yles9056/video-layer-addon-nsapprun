@@ -9,7 +9,8 @@
     "electron-rebuild": "^3.2.7"
   },
   "scripts": {
-    "copyfiles": "copyfiles -u 2 build/Release/addon.node ../../build",
-    "build": "electron-rebuild -f xcode --version 17.1.0"
+    "copyfiles": "copyfiles -u 2 build/Release/VideoLayerLibV1.node ../../build",
+    "build": "electron-rebuild -f xcode --version 17.1.0",
+    "buildAndCopy": "yarn build && yarn copyfiles"
   }
 }

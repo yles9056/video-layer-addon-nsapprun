@@ -8,9 +8,9 @@ import _ from "lodash";
 import path from "path";
 import { setupCameraIpc } from "./camera/ipc";
 import { byOS, isDevelopment, logger, OS } from "./util";
-import { setupVideoLayerIpc } from "./videoLayer/ipc";
-import { destroyVideoLayer } from "./videoLayer/util";
-import * as usbDetect from 'usb-detection';
+import { setupVideoLayerIpc } from "./videoLayerV1/ipc";
+import { destroyVideoLayer } from "./videoLayerV1/util";
+//import * as usbDetect from 'usb-detection';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -115,14 +115,6 @@ const createMainWindow = async () => {
   logger.debug(`startUrl ${startUrl}`);
   mainWindow.loadURL(startUrl); // 主視窗讀取URL
 
-  // 等主視窗出現後再執行
-  /* mainWindow.once("show", () => {
-    // 初始化video layer
-    if (mainWindow) {
-      initVideoLayer(mainWindow.getNativeWindowHandle());
-    }
-  }); */
-
   mainWindow.once("ready-to-show", () => {
     mainWindow?.show();
   });
@@ -133,7 +125,7 @@ const createMainWindow = async () => {
 };
 
 initSettingsFile();
-usbDetect.startMonitoring();
+//usbDetect.startMonitoring();
 
 app.whenReady().then(() => {
   createMainWindow();
@@ -166,6 +158,6 @@ app.on("before-quit", () => {
   _.forEach(BrowserWindow.getAllWindows(), (window) => {
     window.close();
   });
-  usbDetect.stopMonitoring();
+  //usbDetect.stopMonitoring();
   destroyVideoLayer();
 });

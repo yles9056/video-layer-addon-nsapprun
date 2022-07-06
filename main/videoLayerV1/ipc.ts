@@ -10,6 +10,9 @@ import {
   initVideoLayer,
 } from "./util";
 
+let _mainWindow: BrowserWindow | undefined = undefined;
+let childWindow: BrowserWindow | undefined = undefined;
+
 /**
  * 設定video layer控制相關IPC事件處理
  * @param ipcMain 主程序的ipcMain
@@ -19,21 +22,22 @@ export function setupVideoLayerIpc(
   ipcMain: IpcMain,
   mainWindow?: BrowserWindow
 ) {
-  let childWindow = new BrowserWindow({
+  _mainWindow = mainWindow;
+
+  childWindow = new BrowserWindow({
     show: false,
     backgroundColor: "#0FFF",
     transparent: true,
     frame: false,
     parent: mainWindow,
     opacity: 1,
-    hasShadow: false,
   });
   childWindow.setIgnoreMouseEvents(true);
 
   const moveChildWindow = () => {
     if (mainWindow) {
       let bounds = mainWindow?.getBounds();
-      childWindow.setBounds(bounds);
+      childWindow?.setBounds(bounds);
     }
   };
 
@@ -46,24 +50,33 @@ export function setupVideoLayerIpc(
     mainWindow?.webContents.send(EVideoLayerEvent.onVideoLayerRequireResize);
   };
 
-  childWindow.once("show", () => {
-    initVideoLayer(childWindow.getNativeWindowHandle());
+  _mainWindow?.once("closed", () => {
+    _mainWindow = undefined;
+    childWindow?.close();
   });
 
-  childWindow.on('focus', () => {
-    if (mainWindow) {
-      mainWindow.focus();
+  childWindow.once("show", () => {
+    if (childWindow) {
+      initVideoLayer(childWindow.getNativeWindowHandle());
     }
-  })
+  });
+
+  childWindow.on("closed", () => {
+    childWindow = undefined;
+  });
+
+  childWindow.on("focus", () => {
+    _mainWindow?.focus();
+  });
 
   mainWindow?.once("show", () => {
-    childWindow.show();
+    childWindow?.show();
   });
 
   // 視窗正在改變大小時，先隱藏video layer
   mainWindow?.on("resize", () => {
     //setVideoLayerSize(0, 0);
-    childWindow.hide();
+    childWindow?.hide();
   });
 
   // 視窗大小改變後，請求前端回傳顯示區域大小
@@ -99,8 +112,8 @@ export function setupVideoLayerIpc(
       logger.verbose(
         `Receive ${EVideoLayerEvent.setVideoLayerPosition} ${x} ${y}`
       );
-      if (!childWindow.isVisible()) {
-        childWindow.show();
+      if (!childWindow?.isVisible()) {
+        childWindow?.show();
       }
       setVideoLayerPosition(x, y);
     }
@@ -113,8 +126,8 @@ export function setupVideoLayerIpc(
       logger.verbose(
         `Receive ${EVideoLayerEvent.setVideoLayerSize} ${width} ${height}`
       );
-      if (!childWindow.isVisible()) {
-        childWindow.show();
+      if (!childWindow?.isVisible()) {
+        childWindow?.show();
       }
       setVideoLayerSize(width, height);
     }
