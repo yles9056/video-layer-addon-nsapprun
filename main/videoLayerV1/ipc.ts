@@ -26,19 +26,43 @@ export function setupVideoLayerIpc(
 
   childWindow = new BrowserWindow({
     show: false,
-    backgroundColor: "#0FFF",
-    transparent: true,
+    backgroundColor: "#0FF",
+    //transparent: true,
     frame: false,
     parent: mainWindow,
-    opacity: 1,
+    opacity: 0.5,
     title: "VideoLayer Preview",
+    hasShadow: false,
+    resizable: false,
+    acceptFirstMouse: false,
+    focusable: false,
   });
+  childWindow.excludedFromShownWindowsMenu = true;
   childWindow.setIgnoreMouseEvents(true);
 
   const moveChildWindow = () => {
-    if (mainWindow) {
-      let bounds = mainWindow?.getBounds();
-      childWindow?.setBounds(bounds);
+    if (mainWindow && childWindow) {
+      let bounds = mainWindow.getBounds();
+      let position = mainWindow.getPosition();
+      logger.debug(
+        `moveChildWindow mainWindow bounds ${JSON.stringify(bounds)}`
+      );
+      logger.debug(
+        `moveChildWindow mainWindow position ${JSON.stringify(position)}`
+      );
+      childWindow.setBounds(bounds);
+      mainWindow.setBounds(childWindow.getBounds());
+      // childWindow.setSize(bounds.width, bounds.height);
+      // childWindow.setPosition(bounds.x, bounds.y);
+      //mainWindow.focus();
+      logger.debug(
+        `moveChildWindow mainWindow ${JSON.stringify(mainWindow.getPosition())}`
+      );
+      logger.debug(
+        `moveChildWindow childWindow ${JSON.stringify(
+          childWindow.getPosition()
+        )}`
+      );
     }
   };
 
@@ -51,10 +75,23 @@ export function setupVideoLayerIpc(
     mainWindow?.webContents.send(EVideoLayerEvent.onVideoLayerRequireResize);
   };
 
+  const _update = _.debounce(() => {
+    moveChildWindow();
+    sendVideoLayerRequireResize();
+  }, 500);
+
   _mainWindow?.once("closed", () => {
     _mainWindow = undefined;
     childWindow?.close();
   });
+
+  /* _mainWindow?.on("focus", () => {
+    childWindow?.setAlwaysOnTop(true);
+  }); */
+
+  /* _mainWindow?.on("blur", () => {
+    childWindow?.setAlwaysOnTop(false);
+  }); */
 
   childWindow.once("show", () => {
     if (childWindow) {
@@ -79,31 +116,32 @@ export function setupVideoLayerIpc(
     //setVideoLayerSize(0, 0);
     childWindow?.hide();
   });
+  mainWindow?.on("move", () => {
+    //setVideoLayerSize(0, 0);
+    childWindow?.hide();
+  });
 
   // 視窗大小改變後，請求前端回傳顯示區域大小
   mainWindow?.on("resized", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
+  });
+  mainWindow?.on("moved", () => {
+    _update();
   });
   mainWindow?.on("maximize", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
   });
   mainWindow?.on("unmaximize", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
   });
   mainWindow?.on("restore", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
   });
   mainWindow?.on("enter-full-screen", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
   });
   mainWindow?.on("leave-full-screen", () => {
-    moveChildWindow();
-    sendVideoLayerRequireResize();
+    _update();
   });
 
   // 前端請求設定video layer位置
